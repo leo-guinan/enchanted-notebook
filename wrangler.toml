@@ -21,7 +21,7 @@ run_worker_first = ["/api/*", "/r/*", "/healthz"]
 [[d1_databases]]
 binding = "DB"
 database_name = "enchanted-notebook"
-database_id = "REPLACE_WITH_D1_ID"   # set by scripts/cloudflare.sh
+database_id = "748c406f-df2b-421c-a10b-d3d5cf7787ab"   # set by scripts/cloudflare.sh
 migrations_dir = "migrations"
 
 [observability]
