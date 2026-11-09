@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notebook referrals</title>
+<meta name="robots" content="noindex">
+<style>
+:root{--bg:#f6f1e7;--ink:#2a1f16;--muted:#7a6a55;--line:#e2d7c3;--accent:#8a4b1f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1f1914;--ink:#efe5d3;--muted:#b4a58e;--line:#3a2f25;--accent:#e2a56f}}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,sans-serif;padding:24px 16px}
+main{max-width:860px;margin:0 auto}
+h1{font-size:20px;margin:0 0 4px}.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:18px 0}
+.tile{border:1px solid var(--line);border-radius:8px;padding:12px}
+.tile b{display:block;font-size:26px;font-variant-numeric:tabular-nums}
+table{width:100%;border-collapse:collapse;margin:8px 0 22px}td,th{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line)}
+th{font-weight:600;color:var(--muted);font-size:13px}td.n{text-align:right;font-variant-numeric:tabular-nums}
+form{display:flex;gap:8px;margin:12px 0}input{flex:1;min-width:0;padding:8px;border:1px solid var(--line);border-radius:6px;background:transparent;color:inherit}
+button{padding:8px 12px;border:1px solid var(--line);border-radius:6px;background:transparent;color:inherit;cursor:pointer}
+</style>
+</head>
+<body><main>
+<h1>Enchanted Notebook: referrals</h1>
+<p class="muted">Clicks show that a visitor followed a link to the original essay, not that they read it.</p>
+<form id="f"><input id="tok" type="password" placeholder="admin token" aria-label="Admin token"><button>Load</button></form>
+<div id="out"></div>
+<h2 style="font-size:16px">Hide a guest-book page</h2>
+<form id="h"><input id="pid" inputmode="numeric" placeholder="page id" aria-label="Page id"><button data-a="hide">Hide</button><button data-a="show">Show</button></form>
+<p class="muted" id="msg"></p>
+</main>
+<script>
+const $=s=>document.querySelector(s);let tok='';try{tok=sessionStorage.getItem('en.admin')||''}catch{}
+$('#tok').value=tok;
+async function load(){tok=$('#tok').value.trim();try{sessionStorage.setItem('en.admin',tok)}catch{}
+  const r=await fetch('/api/admin/stats',{headers:{authorization:'Bearer '+tok}});if(!r.ok){$('#out').textContent='Not authorized.';return}
+  const s=await r.json();const pct=x=>(100*x).toFixed(1)+'%';
+  const tiles=[['Unique visitors',s.uniqueVisitors],['Questions asked',s.questionsAsked],['Source referrals',s.sourceReferrals],['Referral rate',pct(s.sourceReferralRate)],['Guest-book pages',s.pages],['Idea views',s.broadcastIdeaViews]];
+  const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  $('#out').innerHTML=`<div class="grid">${tiles.map(([k,v])=>`<div class="tile"><span class="muted">${k}</span><b>${esc(v)}</b></div>`).join('')}</div>
+  <h2 style="font-size:16px">Most explored essays</h2><table><tr><th>Essay</th><th class="n">Clicks</th></tr>${s.mostExplored.map(r=>`<tr><td>${esc(r.title||r.source_id)}</td><td class="n">${r.clicks}</td></tr>`).join('')||'<tr><td colspan=2 class=muted>No referrals yet</td></tr>'}</table>
+  <h2 style="font-size:16px">Common question words</h2><p>${s.questionThemes.map(([t,n])=>esc(t)+' ('+n+')').join(', ')||'<span class=muted>None yet</span>'}</p>
+  <h2 style="font-size:16px">Generated answers by day</h2><table><tr><th>Day</th><th class="n">Answers</th><th class="n">Input tokens</th><th class="n">Output tokens</th></tr>${s.spend.map(r=>`<tr><td>${r.day}</td><td class="n">${r.generated}</td><td class="n">${r.in_tokens}</td><td class="n">${r.out_tokens}</td></tr>`).join('')||'<tr><td colspan=4 class=muted>None yet</td></tr>'}</table>
+  <p class="muted">Model: ${esc(s.model)} · unique visitors who clicked a source: ${s.uniqueReferringVisitors} · hidden pages: ${s.hiddenPages}</p>`}
+$('#f').addEventListener('submit',e=>{e.preventDefault();load()});
+$('#h').addEventListener('submit',async e=>{e.preventDefault();const a=e.submitter?.dataset.a||'hide';const r=await fetch(`/api/admin/pages/${encodeURIComponent($('#pid').value)}/${a}`,{method:'POST',headers:{authorization:'Bearer '+$('#tok').value.trim()}});$('#msg').textContent=r.ok?`Page ${$('#pid').value}: ${a==='hide'?'hidden':'shown'}.`:'Not authorized.'});
+if(tok)load();
+</script>
+</body></html>

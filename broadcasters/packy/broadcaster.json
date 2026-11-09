@@ -1,0 +1,178 @@
+{
+  "id": "packy",
+  "title": "The Enchanted Notebook",
+  "subject": {
+    "name": "Packy McCormick",
+    "publication": "Not Boring",
+    "home": "https://www.notboring.co/"
+  },
+  "notice": "An independent interactive tribute to Packy McCormick's published work. Not affiliated with or endorsed by Packy McCormick or Not Boring.",
+  "invitation": "Ask the notebook about Packy's ideas. Your page stays in the guest book for the next visitor.",
+  "theme": {
+    "questionFont": "VT323",
+    "answerInk": "#2a1f16",
+    "questionInk": "#1f3a2e",
+    "paper": "#f3ead6",
+    "desk": "#2a1d14"
+  },
+  "limits": {
+    "questionMaxChars": 240,
+    "asksPerPage": 5,
+    "answersPerIpPer10Min": 12,
+    "generatedAnswersPerDay": 400,
+    "maxOutputTokens": 500
+  },
+  "broadcast": {
+    "rotateSeconds": 90,
+    "policy": "sequential"
+  },
+  "destinations": ["notboring.co"],
+  "sources": [
+    {
+      "id": "great-online-game",
+      "title": "The Great Online Game",
+      "author": "Packy McCormick",
+      "url": "https://www.notboring.co/p/the-great-online-game",
+      "published": "2021-05-10",
+      "summary": "Packy argues that being online is an ongoing, infinite game whose points spill over into real life: jobs, money, friends and opportunities. You start playing the moment you notice you are playing. Curiosity, sharing and helping others earn points; crypto works like the game's in-game money; and because failure online costs almost nothing, people can experiment, build optionality and find their niche. He borrows Josh Buckley's ingredients of great games (feedback loops, variable outcomes, a sense of control, a meta-game) as a playbook, and warns that bad behavior is the fastest way to lose.",
+      "themes": ["internet", "games", "infinite game", "optionality", "crypto", "creators", "careers", "surface area", "cooperation"],
+      "points": [
+        "Life online is a game whose rewards carry into offline life: jobs, money, relationships and opportunities.",
+        "It is an infinite game in James Carse's sense: the point is to keep playing, and the rules keep changing.",
+        "Points come from curiosity, sharing what you learn and helping other people.",
+        "Crypto is best understood as in-game money for the internet, not the game itself; social tokens, NFTs and DAOs make the game more concrete.",
+        "Because the cost of failure online is close to zero, people can experiment and build optionality.",
+        "Josh Buckley's game-design ingredients (feedback loops, variable outcomes, a sense of control, connection to a meta-game) double as a playbook for players.",
+        "The game rewards community and cooperation over pure competition; bad behavior is the quickest way to lose everything.",
+        "Not everyone has the time or security to play, which the essay acknowledges."
+      ],
+      "quotes": [
+        "The Great Online Game is free to play, and it starts simply: by realizing that you're playing a game.",
+        "Every tweet is a free lottery ticket.",
+        "The Game rewards community and cooperation over individualism and competition."
+      ],
+      "concepts": {
+        "Great Online Game": "The ongoing, cross-platform game people play online whose results show up in offline life.",
+        "infinite game": "A game played in order to keep playing, with changing rules and no fixed end (from James Carse).",
+        "meta-game": "The larger game of career, reputation and life that individual online moves feed into.",
+        "surface area": "How much of your work and identity is visible online, which raises the odds of lucky encounters."
+      }
+    },
+    {
+      "id": "cooperation-economy",
+      "title": "The Cooperation Economy",
+      "subtitle": "Or How to Build a Liquid Super Team",
+      "author": "Packy McCormick",
+      "url": "https://www.notboring.co/p/the-cooperation-economy-",
+      "published": "2021-06-07",
+      "summary": "As the internet makes individuals more powerful than institutions, Packy argues the bigger opportunity is not going solo but cooperating. Lower transaction costs let independent people combine into Liquid Super Teams: temporary, voluntary groups with complementary strengths that form around a goal and dissolve when it is done, like NBA players choosing to team up. Examples include solo investors co-investing, DAOs pooling capital and companies run by part-time contributors. With no employment contract holding them together, these teams run on social norms and on each member continuing to bring something unique.",
+      "themes": ["cooperation", "liquid super teams", "work", "teams", "creators", "solo investors", "DAOs", "talent density", "optionality"],
+      "points": [
+        "The individual is becoming the atomic unit of the internet economy.",
+        "Cooperation, not just independence, is the winning strategy in the Great Online Game.",
+        "Liquid Super Teams are collections of individuals with their own strengths, powers and networks who combine forces to reach a goal, then can disband.",
+        "The NBA's shift to player-driven Super Teams is the model: stars choosing to work together.",
+        "Individuals can cooperate with less friction than companies, and lowering the commitment asked of each person raises talent density.",
+        "Examples include solo GPs co-investing, DAOs pooling capital, and startups built by part-time contributors.",
+        "Without employment contracts, these teams depend on social norms and on each member continuing to add unique value."
+      ],
+      "quotes": [
+        "Cooperation is the winning strategy in the Great Online Game.",
+        "Individuals can cooperate with each other with much less friction than companies can.",
+        "Liquid Super Teams allow each individual involved to bring their full powers to bear."
+      ],
+      "concepts": {
+        "Liquid Super Team": "A temporary, voluntary group of individuals with complementary strengths and networks who combine forces for a goal and can disband freely.",
+        "Cooperation Economy": "Collaboration that emerges when independent individuals recombine in new ways by choice.",
+        "talent density": "The concentration of skilled people on a project, raised when each person needs to commit less.",
+        "Smiling Curve": "The idea that value collects at the creator and aggregator ends of a chain while middlemen get squeezed."
+      }
+    },
+    {
+      "id": "not-boring-liquid-super-team",
+      "title": "The Not Boring Liquid Super Team",
+      "author": "Packy McCormick",
+      "url": "https://www.notboring.co/p/the-not-boring-liquid-super-team",
+      "published": "2022-04-11",
+      "summary": "On Not Boring's second anniversary, Packy turns the Liquid Super Team idea on himself. After two years of working alone, first on the newsletter and then on Not Boring Capital, he concludes that going solo limits what the business can do. Instead of a large, permanent organization, he describes a loose team of experts who follow their curiosity and collaborate on projects, funded by the media business. His brother Dan joins as Chief of Staff, and the team recruits research analysts for 'atoms' and 'bits'.",
+      "themes": ["liquid super teams", "teams", "Not Boring", "newsletter", "venture", "media business", "flywheel", "hiring"],
+      "points": [
+        "Packy had preferred working alone, worried that hiring would hurt the writing.",
+        "He concludes that the solo approach works but limits sourcing, technical evaluation and support for portfolio companies.",
+        "His answer is a Liquid Super Team: a flexible group of experts rather than a big, fixed organization.",
+        "Revenue from the media business can pay for research, hiring and help for the fund's companies.",
+        "He announces roles such as Chief of Staff (his brother Dan) and research analysts for physical-world science and digital topics."
+      ],
+      "quotes": [
+        "No one wants more content. They want something unique that they can't get anywhere else.",
+        "We don't need to build a huge, permanent monolithic structure to have a big impact."
+      ],
+      "concepts": {
+        "Not Boring Flywheel": "The cycle in which the newsletter, the media business and the fund reinforce each other."
+      }
+    },
+    {
+      "id": "power-to-the-person",
+      "title": "Power to the Person",
+      "author": "Packy McCormick",
+      "url": "https://www.notboring.co/p/power-to-the-person",
+      "published": "2021-02-22",
+      "summary": "Packy argues that software, crypto and NFTs are shifting power from companies to individuals, and predicts that within a couple of decades a company worth over a trillion dollars could have a single full-time employee. People follow people, not companies, which gives individuals an edge in attracting customers, investors and collaborators. Drawing on Ronald Coase, he explains that firms exist to lower transaction costs; as software, blockchains and NFTs lower those costs, the ideal firm shrinks. He expects small teams, not solo founders, to lead first, and wants creators to build things that outlive their own labor.",
+      "themes": ["individuals", "creator economy", "passion economy", "transaction costs", "Coase", "crypto", "NFTs", "solo company", "small teams"],
+      "points": [
+        "Creator platforms, crypto and NFTs give individuals new power to build and earn.",
+        "Packy predicts trillion-dollar companies with one full-time employee within about two decades.",
+        "People trust and follow individuals more than companies.",
+        "Most creators are still more labor than capital: their business stops when they stop.",
+        "Coase's theory of the firm says companies exist to cut transaction costs; falling transaction costs shrink the ideal firm.",
+        "Better software, blockchain coordination and NFTs are the forces lowering those costs.",
+        "Small teams will lead before solo founders, and how to work should remain the individual's choice."
+      ],
+      "quotes": [
+        "People follow people, not companies",
+        "Creators, even well-paid ones, are still more labor than capital.",
+        "It's a great time to be a person."
+      ],
+      "concepts": {
+        "Solo Corporation": "A company run by one full-time person, with tools and contractors handling the rest.",
+        "transaction costs": "The costs of searching, negotiating and enforcing deals, which Coase said explain why firms exist.",
+        "Passion Economy": "People turning their interests and skills into livelihoods; the Creator Economy is its media-focused part."
+      }
+    },
+    {
+      "id": "introducing-not-boring-capital",
+      "title": "Introducing Not Boring Capital",
+      "author": "Packy McCormick",
+      "url": "https://www.notboring.co/p/introducing-not-boring-capital",
+      "published": "2021-07-12",
+      "summary": "Packy announces Not Boring Capital, an $8 million fund that invests in companies with stories to tell, and helps tell them. The thesis is about narrative: backing 'Worldbuilders', founders pursuing complex, non-obvious strategies toward huge visions, and using the newsletter, memos and podcast as a flywheel that helps founders with distribution and storytelling. It began with his first angel investment, made to help friends tell their company's story, and he shares his fundraising memo openly.",
+      "themes": ["stories", "storytelling", "venture", "Not Boring Capital", "worldbuilders", "narrative", "flywheel", "founders"],
+      "points": [
+        "Not Boring Capital is an $8 million fund investing mainly from Seed through Series B.",
+        "The thesis: back companies with compelling stories and help them tell those stories.",
+        "It looks for Worldbuilders: founders executing complex, non-obvious strategies toward huge visions.",
+        "His first angel investment was made to help friends tell their company's story.",
+        "The newsletter, syndicate, memos and podcast form a flywheel for distribution and storytelling."
+      ],
+      "quotes": [
+        "Not Boring Capital is an $8 million venture fund that invests in companies with stories to tell, and helps tell them.",
+        "We're looking for Worldbuilders, founders and companies executing on complex, non-obvious strategies towards huge visions."
+      ],
+      "concepts": {
+        "Worldbuilders": "Founders and companies executing complex, non-obvious strategies toward huge visions."
+      }
+    }
+  ],
+  "ideas": [
+    { "source": "great-online-game", "text": "The game starts the moment you notice you're playing it. Curiosity, sharing and helping others are how you score." },
+    { "source": "cooperation-economy", "text": "A Liquid Super Team forms around a goal, lets everyone bring their full powers, and can dissolve when the work is done." },
+    { "source": "power-to-the-person", "text": "People follow people, not companies. As transaction costs fall, the ideal company gets smaller." },
+    { "source": "introducing-not-boring-capital", "text": "Invest in companies with stories to tell, and help tell them." },
+    { "source": "not-boring-liquid-super-team", "text": "You don't need a huge, permanent structure to have a big impact: a loose team of curious experts can do it." },
+    { "source": "great-online-game", "text": "Online, the cost of failure is close to zero, so you can afford to experiment and build optionality." }
+  ],
+  "unverified": [
+    { "topic": "Story Time", "note": "Named in the brief; no essay by that title was located. Not indexed." },
+    { "topic": "The enchanted notebook idea", "note": "Original source not yet located. Not indexed." }
+  ]
+}

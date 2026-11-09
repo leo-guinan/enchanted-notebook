@@ -1,0 +1,13 @@
+{
+  "name": "enchanted-notebook",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A living guest book for a creator's published work: visitors type questions, an enchanted quill answers from the original sources and points them to read more.",
+  "type": "module",
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "start": "node --no-warnings server/index.mjs",
+    "test": "node --no-warnings --test test/*.test.mjs",
+    "e2e": "node --no-warnings tools/e2e.mjs"
+  }
+}

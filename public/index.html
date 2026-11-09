@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Enchanted Notebook</title>
+<meta name="description" content="An enchanted notebook about Packy McCormick's published ideas. Ask a question; the quill answers from the original essays and points you to read them. Every visitor adds a page.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/notebook.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M6 28c6-8 13-17 22-24-4 9-11 17-20 22' fill='%23efe3c8' stroke='%232a1f16'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="desk">
+  <header class="masthead">
+    <h1 class="title">The Enchanted Notebook</h1>
+    <p class="subtitle" id="invitation"></p>
+  </header>
+
+  <nav class="tabs" aria-label="Notebook pages">
+    <button type="button" data-show="guest" aria-pressed="false">Guest book</button>
+    <button type="button" data-show="mine" aria-pressed="true">Your page</button>
+  </nav>
+
+  <section class="book" id="book" data-show="mine">
+    <article class="page left" id="guest" aria-label="Guest book">
+      <header class="page-head"><span class="folio" id="guest-folio">The guest book</span><span class="when" id="guest-when"></span></header>
+      <div class="page-body" id="guest-body"><p class="empty">No one has signed the notebook yet. Yours will be the first page.</p></div>
+      <footer class="page-foot">
+        <button type="button" class="turn" id="older" aria-label="Earlier page">&lsaquo; earlier</button>
+        <span class="count" id="guest-count"></span>
+        <button type="button" class="turn" id="newer" aria-label="Later page">later &rsaquo;</button>
+      </footer>
+    </article>
+
+    <div class="gutter" aria-hidden="true"></div>
+
+    <article class="page right" id="mine" aria-label="Your page">
+      <header class="page-head"><span class="folio" id="mine-folio">Your page</span><span class="when" id="mine-when"></span></header>
+      <div class="page-body" id="mine-body">
+        <div class="idea" id="idea" aria-live="polite"></div>
+        <div class="convo" id="convo"></div>
+      </div>
+      <form class="ask" id="ask" autocomplete="off">
+        <label for="q" class="prompt">&gt;</label>
+        <input id="q" name="q" type="text" maxlength="240" placeholder="ask the notebook something" aria-label="Ask the notebook a question" spellcheck="false">
+        <button type="submit" class="send" aria-label="Ask">ask</button>
+      </form>
+      <div class="page-tools">
+        <button type="button" id="skip" hidden>finish writing</button>
+        <button type="button" id="next-idea">another idea</button>
+      </div>
+    </article>
+
+    <canvas class="quill-layer" id="quill" aria-hidden="true"></canvas>
+  </section>
+
+  <footer class="colophon">
+    <p id="notice"></p>
+    <p class="sources-line" id="sources-line"></p>
+  </footer>
+  <p class="sr-only" id="live" aria-live="polite"></p>
+</main>
+<script src="/vendor/fold.iife.js"></script>
+<script type="module" src="/notebook.js"></script>
+</body>
+</html>
