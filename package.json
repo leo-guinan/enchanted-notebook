@@ -4,10 +4,18 @@
   "private": true,
   "description": "A living guest book for a creator's published work: visitors type questions, an enchanted quill answers from the original sources and points them to read more.",
   "type": "module",
-  "engines": { "node": ">=22.13" },
+  "engines": {
+    "node": ">=22.13"
+  },
   "scripts": {
     "start": "node --no-warnings server/index.mjs",
     "test": "node --no-warnings --test test/*.test.mjs",
-    "e2e": "node --no-warnings tools/e2e.mjs"
+    "e2e": "node --no-warnings tools/e2e.mjs",
+    "dev:cf": "wrangler dev --port 8788",
+    "migrate:local": "wrangler d1 migrations apply enchanted-notebook --local",
+    "cf:setup": "bash scripts/cloudflare.sh"
+  },
+  "devDependencies": {
+    "wrangler": "^4.159.0"
   }
 }

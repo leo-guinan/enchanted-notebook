@@ -13,9 +13,10 @@ const require = createRequire(import.meta.url);
 let pw; try { pw = require('playwright'); } catch { pw = require(join(process.env.NODE_PATH || '/usr/local/lib/node_modules_global', 'playwright')); }
 const OUT = 'out/e2e'; rmSync(OUT, { recursive: true, force: true }); mkdirSync(OUT, { recursive: true });
 
-const app = createApp({ ...process.env, DB_FILE: ':memory:', ADMIN_TOKEN: 'e2e' });
-const srv = http.createServer(app.handle); await new Promise(r => srv.listen(0, r));
-const base = `http://127.0.0.1:${srv.address().port}`;
+// E2E_BASE=<url> runs against a server that's already up (e.g. `wrangler dev`); its ADMIN_TOKEN must be E2E_ADMIN (default e2e)
+let srv = null, base = process.env.E2E_BASE;
+if (!base) { const app = await createApp({ ...process.env, DB_FILE: ':memory:', ADMIN_TOKEN: 'e2e' }); srv = http.createServer(app.handle); await new Promise(r => srv.listen(0, r)); base = `http://127.0.0.1:${srv.address().port}`; }
+const ADMIN = process.env.E2E_ADMIN || 'e2e';
 const post = (p, b) => fetch(base + p, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(b) }).then(r => r.json());
 const fail = []; const check = (ok, msg) => { console.log((ok ? 'PASS ' : 'FAIL ') + msg); if (!ok) fail.push(msg); };
 
@@ -71,7 +72,7 @@ await run('reduced motion', { viewport: { width: 1280, height: 800 }, reducedMot
   check(await page.locator('.answer.pending').count() === 0, 'reduced motion: the answer appears at once');
 });
 
-const st = await fetch(`${base}/api/admin/stats`, { headers: { authorization: 'Bearer e2e' } }).then(r => r.json());
+const st = await fetch(`${base}/api/admin/stats`, { headers: { authorization: 'Bearer ' + ADMIN } }).then(r => r.json());
 check(st.sourceReferrals >= 1 && st.uniqueVisitors >= 3 && st.pages >= 5, `admin stats: ${st.uniqueVisitors} visitors, ${st.questionsAsked} questions, ${st.sourceReferrals} referrals, ${st.pages} pages`);
-await browser.close(); srv.close();
+await browser.close(); srv?.close();
 console.log(fail.length ? `\n${fail.length} FAILED` : '\nall passed'); process.exit(fail.length ? 1 : 0);

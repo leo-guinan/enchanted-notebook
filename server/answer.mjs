@@ -45,7 +45,8 @@ Reply with JSON only, no prose around it:
 {"answer": "2-4 plain sentences that directly answer", "explore": "optional: one or two sentences connecting the idea to another passage; label your own interpretation with 'One reading:'", "sources": ["ids of the passages you actually used, most relevant first, at most 3"], "related": ["one or two short follow-up questions the notebook could answer"], "supported": true}
 Write in plain ASCII (straight quotes, no em dashes), warm and clear, no markdown.`;
 
-export async function answerQuestion({ index, question, apiKey, model: modelId, maxTokens = 500, allowModel = true, fetchImpl = fetch }) {
+export async function answerQuestion({ index, question, apiKey, model: modelId, baseUrl, maxTokens = 500, allowModel = true, fetchImpl }) {
+  fetchImpl = fetchImpl || ((...a) => fetch(...a));
   const { hits, top, coverage = 0 } = search(index, question, 8);
   // most of the question's words must be ones the collection actually uses; the model gets a looser bar
   // because it can still say "not supported", the extractive path cannot
@@ -63,7 +64,7 @@ export async function answerQuestion({ index, question, apiKey, model: modelId, 
   const body = { model: modelId, max_tokens: maxTokens, system: SYSTEM, messages: [{ role: 'user', content: `Passages:\n${context}\n\nVisitor's question: ${question}` }] };
   let out;
   try {
-    const r = await fetchImpl('https://api.anthropic.com/v1/messages', {
+    const r = await fetchImpl(`${(baseUrl || 'https://api.anthropic.com').replace(/\/$/, '')}/v1/messages`, {
       method: 'POST', headers: { 'content-type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01' }, body: JSON.stringify(body),
     });
     if (!r.ok) throw new Error(`model ${r.status}`);

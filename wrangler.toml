@@ -1,0 +1,31 @@
+# The Enchanted Notebook on Cloudflare: Workers Free + Static Assets + D1 ($0/month at small scale).
+# First-time setup and every deploy: scripts/cloudflare.sh (or the GitHub Action in .github/workflows/deploy.yml).
+name = "enchanted-notebook"
+main = "worker/index.mjs"
+compatibility_date = "2025-09-01"
+workers_dev = true
+
+[vars]
+BROADCASTER = "packy"
+MODEL = "claude-haiku-5-5"
+
+# The page, scripts, fonts list, glyphs: served by Cloudflare directly, free and unmetered.
+# Only /api/*, /r/* and /healthz run the Worker.
+[assets]
+directory = "public"
+binding = "ASSETS"
+html_handling = "auto-trailing-slash"
+not_found_handling = "none"
+run_worker_first = ["/api/*", "/r/*", "/healthz"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "enchanted-notebook"
+database_id = "REPLACE_WITH_D1_ID"   # set by scripts/cloudflare.sh
+migrations_dir = "migrations"
+
+[observability]
+enabled = true
+
+# The custom domain is attached by scripts/cloudflare.sh once enchantednotebook.com is a zone on the account:
+# routes = [{ pattern = "enchantednotebook.com", custom_domain = true }]

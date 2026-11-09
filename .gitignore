@@ -3,3 +3,5 @@ data/*.db
 data/*.db-*
 out/
 .env
+.dev.vars
+.wrangler/

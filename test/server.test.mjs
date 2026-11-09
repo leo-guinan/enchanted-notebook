@@ -4,7 +4,7 @@ import { createApp } from '../server/index.mjs';
 import { buildIndex, search, rankSources } from '../server/retrieve.mjs';
 import { answerQuestion, asciiForQuill } from '../server/answer.mjs';
 import * as Fold from '../server/vendor/fold/index.js';
-import { pageWorld, replayPage } from '../shared/page-world.mjs';
+import { pageWorld, replayPage } from '../public/shared/page-world.mjs';
 import http from 'node:http';
 import { readFileSync } from 'node:fs';
 
@@ -69,7 +69,7 @@ test('a page is a fold log with the notebook rules', () => {
 });
 
 test('API: guest book flow, referral redirect, admin stats', async () => {
-  const app = createApp({ DB_FILE: ':memory:', ADMIN_TOKEN: 'secret' });
+  const app = await createApp({ DB_FILE: ':memory:', ADMIN_TOKEN: 'secret' });
   const srv = http.createServer(app.handle); await new Promise(r => srv.listen(0, r));
   const base = `http://127.0.0.1:${srv.address().port}`;
   const j = async (path, init) => { const r = await fetch(base + path, init); return [r.status, r.status === 204 ? null : await r.json().catch(() => null), r]; };
@@ -93,6 +93,7 @@ test('API: guest book flow, referral redirect, admin stats', async () => {
     [, list] = await j('/api/pages'); assert.equal(list.total, 0, 'hidden pages leave the guest book');
     const [c5] = await j('/shared/page-world.mjs'); assert.equal(c5, 200);
     const [c6] = await j('/../server/index.mjs'); assert.equal(c6, 404);
+    const [c7] = await j('/api/nope'); assert.equal(c7, 404);
   } finally { srv.close(); }
 });
 

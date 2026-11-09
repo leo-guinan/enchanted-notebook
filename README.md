@@ -20,12 +20,51 @@ npm run e2e                    # real-browser run on desktop, phone and reduced 
 
 There are no runtime dependencies. The page engine ([fold](https://github.com/leo-guinan/fold)) is vendored.
 
-**Deploy.** Run the Docker image (or `npm start`) anywhere that runs Node 22, with a persistent volume for `/data`. Point `enchantednotebook.com` at it through a TLS proxy (Caddy, Fly.io, Render, or a VPS with nginx) and set `TRUST_PROXY=1`.
+**Or deploy on any Node host.** Run the Docker image (or `npm start`) anywhere that runs Node 22, with a persistent volume for `/data`. Point `enchantednotebook.com` at it through a TLS proxy (Caddy, Fly.io, Render, or a VPS with nginx) and set `TRUST_PROXY=1`.
 
 ```sh
 docker build -t enchanted-notebook .
 docker run -p 8787:8787 -v notebook-data:/data -e ANTHROPIC_API_KEY=… -e ADMIN_TOKEN=… -e TRUST_PROXY=1 enchanted-notebook
 ```
+
+## Deploy on Cloudflare ($0 a month to start)
+
+The notebook runs on Cloudflare as one Worker:
+
+- **Static Assets** serve the page, scripts and glyphs. They're free and unmetered, and they never wake the Worker.
+- **The Worker** runs only `/api/*`, `/r/*` and `/healthz`, using the same `server/app.mjs` the Node server uses.
+- **D1** stores the guest book.
+
+| Piece | Free allowance | What the notebook uses |
+|---|---|---|
+| Workers | 100k requests/day, 10 ms CPU each | each question uses about 1–3 ms of CPU; the wait on Claude doesn't count toward CPU |
+| Static Assets | unlimited | the whole site |
+| D1 | 5M reads/day, 100k writes/day, 5 GB | about 6 writes per question |
+| Claude API | pay as you go | capped at `generatedAnswersPerDay` (400). Repeated questions are cached, and past the cap the notebook answers extractively |
+
+If a launch spike goes past 100k requests a day, Workers Paid costs $5 a month and raises every limit. Nothing else changes.
+
+**Set it up once:**
+
+1. Create an API token at dash.cloudflare.com → My Profile → API Tokens. Use the "Edit Cloudflare Workers" template and add **Account › D1 › Edit**. Add **Zone › Workers Routes › Edit** if you'll use the custom domain.
+2. In the GitHub repo, go to Settings → Secrets → Actions and add these secrets:
+   - `CLOUDFLARE_API_TOKEN`
+   - `CLOUDFLARE_ACCOUNT_ID`
+   - `ANTHROPIC_API_KEY`
+   - `ADMIN_TOKEN`
+   - `RATE_SALT` (optional)
+3. Push to `main`. `.github/workflows/deploy.yml` runs the tests, then `scripts/cloudflare.sh`, which:
+   - creates the D1 database if it's missing
+   - applies `migrations/`
+   - deploys the Worker
+   - attaches `enchantednotebook.com` if that zone is on the account
+   - sets the secrets
+
+To deploy from your own machine instead, run `npx wrangler login && ANTHROPIC_API_KEY=… ADMIN_TOKEN=… npm run cf:setup`.
+
+**Develop against the Worker locally:** run `npm run migrate:local && npm run dev:cf`. That serves http://localhost:8788 with a local D1. Put secrets in `.dev.vars`, which is gitignored.
+
+**Optional:** to log and cache Claude calls, set `ANTHROPIC_BASE_URL` to a Cloudflare AI Gateway URL. AI Gateway is free.
 
 ## How it works
 
